@@ -6,9 +6,10 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/questionText"
         android:text="Good workout guys!"
         android:textSize="40sp"
-        android:padding="40dp"
+        android:padding="10dp"
         android:layout_margin="20dp"
         android:textAlignment="center"
         android:layout_height="wrap_content"
@@ -18,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:padding="10dp"
         android:orientation="horizontal">
 
         <Button
@@ -25,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#80bfff"
+            android:layout_marginRight="10dp"
             android:text="True"/>
 
         <Button
