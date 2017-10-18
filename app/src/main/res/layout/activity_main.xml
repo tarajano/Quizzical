@@ -36,7 +36,16 @@
             android:layout_height="wrap_content"
             android:background="#80bfff"
             android:text="False"/>
-
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/anserwText"
+        android:text=""
+        android:textSize="40sp"
+        android:padding="10dp"
+        android:layout_margin="20dp"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
 
 </LinearLayout>
