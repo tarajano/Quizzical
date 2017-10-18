@@ -24,13 +24,14 @@
             android:id="@+id/buttontTrue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#80bfff"
             android:text="True"/>
 
         <Button
             android:id="@+id/buttontFalse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor=""
+            android:background="#80bfff"
             android:text="False"/>
 
     </LinearLayout>
