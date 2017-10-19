@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/timerClock"
-        android:text="clock"
+        android:text="add clock"
         android:textSize="20sp"
         android:padding="10dp"
         android:layout_gravity="right"

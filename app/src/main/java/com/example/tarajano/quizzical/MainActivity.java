@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean questionAnswered, lastAnswer;
     private Button buttonTrue, buttonFalse, buttonNext;
     private static final long startTime = 0;
+    private String pathToJSON = "quiz.json";
 
     // Constants fields
     private static final String KEY_SCORE = "score";
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         questionText = (TextView) findViewById(R.id.questionText);
 
         // Create question
-        quiz = Quiz.getInstance();
+        quiz = new QuizRepository(this).getQuiz(pathToJSON);
 
         // Actions for buttons
         buttonTrue.setOnClickListener(new View.OnClickListener() {
@@ -135,10 +136,10 @@ public class MainActivity extends AppCompatActivity {
         if (anwser == getCurrentQuestion().getAnswer()){
             answerText.setText("Correct");
             score = score + 1;
-            buttonTrue.setEnabled(false);
+            //buttonTrue.setEnabled(false);
         } else {
             answerText.setText("Incorrect");
-            buttonFalse.setEnabled(false);
+            //buttonFalse.setEnabled(false);
         }
         buttonNext.setEnabled(true);
         Log.e("bootcamp", "checkAnswer");
