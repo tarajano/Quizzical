@@ -1,0 +1,20 @@
+{
+  "questions":[
+    {
+      "answer": false,
+      "statement": "The moon is made of cheese"
+    },
+    {
+      "answer": true,
+      "statement": "The sum of the internal angles of a triangle is 180"
+    },
+    {
+      "answer": false,
+      "statement": "Fire alarms are fun"
+    },
+    {
+      "answer": true,
+      "statement": "We like Shopify"
+    }
+  ]
+}

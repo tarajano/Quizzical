@@ -5,16 +5,17 @@ package com.example.tarajano.quizzical;
  */
 
 public class Question {
+
     private boolean answer;
     private String statement;
 
-    // constructor
+    // Constructor
     public Question(String proposition, boolean answer) {
         this.answer = answer;
         this.statement = proposition;
     }
 
-    // getters
+    // Getters
     public boolean getAnswer() {
         return answer;
     }
