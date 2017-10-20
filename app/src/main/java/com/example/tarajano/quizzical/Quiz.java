@@ -9,25 +9,25 @@ import java.util.List;
 
 public class Quiz {
 
-    private static Quiz quiz;
+    private int id;
+    private String title;
     private List<Question> questions = new ArrayList<>();
 
-    public static Quiz getInstance() {
-        if (quiz == null) {
-            quiz = new Quiz();
-            quiz.addQuestion(new Question("The moon is made of cheese?", false));
-            quiz.addQuestion(new Question("The sum of the internal angles of a triangle is 180?", true));
-            quiz.addQuestion(new Question("Did we had a good workout this morning?", true));
-        }
-        return quiz;
+    // Getters
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public List<Question> getQuestions() {
         return questions;
     }
 
-    public void addQuestion(Question question) {
-        questions.add(question);
-    }
-
+//    public void addQuestion(Question question) {
+//        questions.add(question);
+//    }
 }
+

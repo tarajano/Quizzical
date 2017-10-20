@@ -7,12 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import static com.example.tarajano.quizzical.R.id.simpleChronometer;
 
-    //TODO
-    // fix the rotation and onSave states
+public class MainActivity extends AppCompatActivity implements QuizRepository.Callback {
 
     // Var fields
     private Quiz quiz;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean questionAnswered, lastAnswer;
     private Button buttonTrue, buttonFalse, buttonNext;
     private static final long startTime = 0;
-    private String pathToJSON = "quiz.json";
+    private Chronometer simpleChronometer;
 
     // Constants fields
     private static final String KEY_SCORE = "score";
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_LAST_ANSWER = "LAST_ANSWER";
     private static final String KEY_ANSWERED = "QUESTION_ANSWERED";
     private static final String KEY_QUESTION_INDEX = "KEY_QUESTION_INDEX";
+    private static final String QUIZ_ID = "quiz_id";
+    //private static final String KEY_TOTALTIME = "totaTime";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,14 @@ public class MainActivity extends AppCompatActivity {
         answerText = (TextView) findViewById(R.id.anserwText);
         questionText = (TextView) findViewById(R.id.questionText);
 
+        // Chronometer
+        simpleChronometer = (Chronometer) findViewById(R.id.simpleChronometer); // initiate a chronometer
+        simpleChronometer.setFormat("Time - %s"); // set the format for a chronometer
+        simpleChronometer.start(); // start a chronometer
+
         // Create question
-        quiz = new QuizRepository(this).getQuiz(pathToJSON);
+        int id = getIntent().getIntExtra(QUIZ_ID, -1);
+        new QuizRepository(this).getRemoteQuiz(id, this);
 
         // Actions for buttons
         buttonTrue.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //TO.DO fix the rotation and onSave states
         // Saving Bundle data
         if (savedInstanceState != null) {
             Log.e("bootcamp", "savedInstanceState not null");
@@ -95,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         if(questionAnswered){
             checkAnswer(lastAnswer);
         }
+
     }
 
     private void nextQuestion(){
@@ -105,7 +116,10 @@ public class MainActivity extends AppCompatActivity {
             Intent resultsIntent = new Intent(this,ResultActivity.class);
             resultsIntent.putExtra(ResultActivity.KEY_SCORE,score);
             resultsIntent.putExtra(ResultActivity.KEY_TOTAL, quiz.getQuestions().size());
+            //resultsIntent.putExtra(ResultActivity.KEY_TOTALTIME, simpleChronometer.  );
             startActivity(resultsIntent);
+            // Chrono
+            simpleChronometer.stop(); // stop a chronometer
         } else {
             questionAnswered = false;
             showQuestion();
@@ -119,7 +133,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Question getCurrentQuestion(){
-        return quiz.getQuestions().get(questionIndex);
+        Question q = quiz.getQuestions().get(questionIndex);
+        Log.e("getCurrentQuestion", " q:" + q + " questionIndex:" + questionIndex);
+        return q;
+
     }
 
     @Override
@@ -128,21 +145,36 @@ public class MainActivity extends AppCompatActivity {
         outState.putBoolean(KEY_ANSWERED, questionAnswered);
         outState.putBoolean(KEY_LAST_ANSWER, lastAnswer);
         outState.putInt(KEY_QUESTION_INDEX, questionIndex);
+        //TODO save quiz state on rotation
     }
 
-    private void checkAnswer(boolean anwser){
+    private void checkAnswer(boolean answer){
         questionAnswered = true;
-        lastAnswer = anwser;
-        if (anwser == getCurrentQuestion().getAnswer()){
+        lastAnswer = answer;
+        boolean rightAnswer = getCurrentQuestion().getAnswer();
+        Log.e("bootcamp checkAnswer", "userAnswer:" + answer + " rightAnswer:" + rightAnswer);
+
+        if (answer == rightAnswer){
             answerText.setText("Correct");
             score = score + 1;
-            //buttonTrue.setEnabled(false);
         } else {
             answerText.setText("Incorrect");
-            //buttonFalse.setEnabled(false);
         }
         buttonNext.setEnabled(true);
-        Log.e("bootcamp", "checkAnswer");
     }
 
+    @Override
+    public void onFailure() {
+        Toast.makeText(this, "Something failed in the network", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccess(Quiz quiz) {
+        this.quiz = quiz;
+        //moved here from onCreate
+        showQuestion();
+        if(questionAnswered){
+            checkAnswer(lastAnswer);
+        }
+    }
 }

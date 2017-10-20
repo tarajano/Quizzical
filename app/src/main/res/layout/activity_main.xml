@@ -6,20 +6,19 @@
     android:background="#cce6ff"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/timerClock"
-        android:text="add clock"
+
+    <Chronometer
+        android:id="@+id/simpleChronometer"
         android:textSize="20sp"
         android:padding="10dp"
         android:layout_gravity="right"
         android:gravity="right"
-        android:layout_margin="20dp"
-        android:layout_height="wrap_content"
-        android:layout_width="100dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/questionText"
-        android:text="Good workout guys!"
+        android:text=""
         android:textSize="30sp"
         android:padding="10dp"
         android:layout_margin="20dp"

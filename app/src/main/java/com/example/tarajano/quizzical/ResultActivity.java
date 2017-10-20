@@ -15,6 +15,7 @@ public class ResultActivity extends AppCompatActivity {
     TextView resultText;
     public static final String KEY_SCORE = "score";
     public static final String KEY_TOTAL = "total";
+    public static final String KEY_TOTALTIME =  "totalTime";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class ResultActivity extends AppCompatActivity {
         resultText.setText(KEY_SCORE);
         int score = getIntent().getIntExtra(KEY_SCORE,0);
         int total = getIntent().getIntExtra(KEY_TOTAL,0);
+        //int total = getIntent().getIntExtra(KEY_TOTALTIME,0);
 
         String result = String.format("%d / %d", score, total);
         resultText.setText(result);
